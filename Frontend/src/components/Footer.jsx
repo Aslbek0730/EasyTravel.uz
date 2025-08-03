@@ -17,7 +17,7 @@ const Footer = () => {
               >
                 <MapPin className="h-6 w-6 text-white" />
               </motion.div>
-              <span className="font-bold text-xl">WonderTravel</span>
+              <span className="font-bold text-xl">TourismTravel</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
               Your trusted partner for unforgettable journeys. We create experiences that last a lifetime 
@@ -58,7 +58,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-400">info@wondertravel.uz</span>
+                <span className="text-gray-400">info@tourismtravel.uz</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-blue-400 mt-1" />
@@ -92,7 +92,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2025 WonderTravel. All rights reserved. | 5+ years of experience | 5000+ happy travelers
+            © 2025 TourismTravel. All rights reserved. | 5+ years of experience | 5000+ happy travelers
           </p>
         </div>
       </div>

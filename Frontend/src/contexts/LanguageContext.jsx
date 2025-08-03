@@ -19,7 +19,7 @@ const translations = {
     yearsExperience: 'Years Experience',
     
     // Features
-    whyChoose: 'Why Choose WonderTravel?',
+    whyChoose: 'Why Choose TourismTravel?',
     safeSecure: 'Safe & Secure',
     safeSecureDesc: 'Your safety is our priority with fully insured tours and experienced guides',
     support247: '24/7 Support',
@@ -82,7 +82,7 @@ const translations = {
     yearsExperience: 'Лет опыта',
     
     // Features
-    whyChoose: 'Почему выбирают WonderTravel?',
+    whyChoose: 'Почему выбирают TourismTravel?',
     safeSecure: 'Безопасно и надежно',
     safeSecureDesc: 'Ваша безопасность - наш приоритет с полностью застрахованными турами и опытными гидами',
     support247: 'Поддержка 24/7',
@@ -126,6 +126,69 @@ const translations = {
     loading: 'Загрузка...',
     error: 'Ошибка',
     success: 'Успех'
+  },
+  uz: {
+    // Navigation
+    home: 'Bosh sahifa',
+    tours: 'Turlar',
+    about: 'Biz haqida',
+    contact: 'Aloqa',
+    
+    // Hero Banner
+    heroTitle: 'Keyingi',
+    heroTitleAccent: 'Sarguzashtingizni',
+    heroSubtitle: 'Kashf eting - unutilmas xotiralar uchun mo\'ljallangan professional sayohatlar bilan ajoyib manzillarni kashf eting',
+    viewDestinations: 'Manzillarni ko\'rish',
+    planTrip: 'Sayohatingizni rejalashtiring',
+    rating: 'Reyting',
+    happyTravelers: 'Baxtli sayohatchilar',
+    yearsExperience: 'Yillik tajriba',
+    
+    // Features
+    whyChoose: 'Nima uchun TourismTravel?',
+    safeSecure: 'Xavfsiz va ishonchli',
+    safeSecureDesc: 'Sizning xavfsizligingiz bizning ustuvorligimiz - to\'liq sug\'urtalangan turlar va tajribali yo\'riqchilar',
+    support247: '24/7 qo\'llab-quvvatlash',
+    support247Desc: 'Sayohatingizdan oldin, davomida va keyin yordam berish uchun kun bo\'yi mijozlarga xizmat',
+    happyClients: '5000+ baxtli mijozlar',
+    happyClientsDesc: 'Bizning ajoyib xizmatimizni boshidan kechirgan minglab mamnun sayohatchilar qatoriga qo\'shiling',
+    
+    // Tours
+    trendingDestinations: 'Trend manzillar',
+    exploreTours: 'Bizning',
+    tourPackages: 'Tur paketlarimizni',
+    filterTours: 'Turlarni filtrlash',
+    searchDestinations: 'Manzillarni qidirish...',
+    allPrices: 'Barcha narxlar',
+    clearAll: 'Hammasini tozalash',
+    showing: 'Ko\'rsatilmoqda',
+    tour: 'tur',
+    noToursFound: 'Turlar topilmadi',
+    adjustFilters: 'Ko\'proq natijalarni ko\'rish uchun filtrlaringizni sozlashga harakat qiling',
+    select: 'Tanlash',
+    perPerson: 'kishiga',
+    
+    // Tour Details Modal
+    tourDetails: 'Tur tafsilotlari',
+    destination: 'Manzil',
+    duration: 'Davomiyligi',
+    startDate: 'Boshlanish sanasi',
+    category: 'Kategoriya',
+    included: 'Nima kiritilgan',
+    location: 'Joylashuv',
+    bookNow: 'Hozir bron qiling',
+    close: 'Yopish',
+    
+    // Categories
+    cultural: 'Madaniy',
+    adventure: 'Sarguzasht',
+    leisure: 'Dam olish',
+    all: 'Hammasi',
+    
+    // Common
+    loading: 'Yuklanmoqda...',
+    error: 'Xato',
+    success: 'Muvaffaqiyatli'
   }
 };
 
@@ -140,7 +203,7 @@ export const useLanguage = () => {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('uz');
 
   const t = (key) => {
     return translations[language][key] || key;

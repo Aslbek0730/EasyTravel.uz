@@ -36,7 +36,7 @@ const ContactPage = () => {
     {
       icon: Mail,
       title: 'Email',
-      details: ['info@wondertravel.uz', 'support@wondertravel.uz'],
+      details: ['info@tourismtravel.uz', 'support@tourismtravel.uz'],
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },

@@ -20,6 +20,7 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const languages = [
+    { code: 'uz', name: 'O\'zbekcha', flag: '🇺🇿' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'ru', name: 'Русский', flag: '🇷🇺' }
   ];
@@ -38,7 +39,7 @@ const Navbar = () => {
               <MapPin className="h-6 w-6 text-white" />
             </motion.div>
             <span className="font-bold text-xl text-gray-800 group-hover:text-blue-600 transition-colors">
-              WonderTravel
+              TourismTravel
             </span>
           </Link>
 

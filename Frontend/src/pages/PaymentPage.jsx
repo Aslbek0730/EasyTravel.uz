@@ -4,8 +4,13 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ArrowLeft, CreditCard, Smartphone, Wallet, QrCode, CheckCircle } from 'lucide-react';
+import { ArrowLeft, QrCode, CheckCircle } from 'lucide-react';
 import { tours } from '../data/tours';
+
+// Import SVG icons
+import ClickIcon from '../images/click.svg';
+import PaymeIcon from '../images/payme-red-logo-27778.svg';
+import UzumIcon from '../images/uzum-bank-seeklogo-4.svg';
 
 const schema = yup.object({
   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
@@ -44,9 +49,27 @@ const PaymentPage = () => {
   }
 
   const paymentMethods = [
-    { id: 'payme', name: 'Payme', icon: Smartphone, color: 'bg-blue-600' },
-    { id: 'click', name: 'Click', icon: CreditCard, color: 'bg-green-600' },
-    { id: 'uzum', name: 'Uzum Bank', icon: Wallet, color: 'bg-purple-600' }
+    { 
+      id: 'payme', 
+      name: 'Payme', 
+      icon: PaymeIcon, 
+      color: 'bg-blue-600',
+      bgColor: 'bg-blue-50'
+    },
+    { 
+      id: 'click', 
+      name: 'Click', 
+      icon: ClickIcon, 
+      color: 'bg-green-600',
+      bgColor: 'bg-green-50'
+    },
+    { 
+      id: 'uzum', 
+      name: 'Uzum Bank', 
+      icon: UzumIcon, 
+      color: 'bg-purple-600',
+      bgColor: 'bg-purple-50'
+    }
   ];
 
   const onSubmit = (data) => {
@@ -178,8 +201,12 @@ const PaymentPage = () => {
                         value={method.id}
                         className="sr-only"
                       />
-                      <div className={`w-10 h-10 ${method.color} rounded-lg flex items-center justify-center mr-4`}>
-                        <method.icon className="h-5 w-5 text-white" />
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 bg-white p-2">
+                        <img 
+                          src={method.icon} 
+                          alt={method.name}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <span className="font-medium text-gray-800">{method.name}</span>
                       {paymentMethod === method.id && (

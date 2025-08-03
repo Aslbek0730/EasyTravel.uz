@@ -39,7 +39,7 @@ const AboutPage = () => {
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center text-white max-w-4xl mx-auto px-4"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">About WonderTravel</h1>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">About TourismTravel</h1>
           <p className="text-xl md:text-2xl text-blue-100">
             Creating extraordinary travel experiences since 2020
           </p>
@@ -84,7 +84,7 @@ const AboutPage = () => {
             <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Founded in 2020, WonderTravel emerged from a simple belief: that travel should be transformative, 
+                Founded in 2020, TourismTravel emerged from a simple belief: that travel should be transformative, 
                 accessible, and unforgettable. What started as a small team of passionate travelers has grown into 
                 one of Uzbekistan's most trusted travel companies.
               </p>
