@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ArrowLeft, CreditCard, Smartphone, Wallet, QrCode, CheckCircle } from 'lucide-react';
 import { tours } from '../data/tours';
-import { PaymentForm } from '../types';
 
 const schema = yup.object({
   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
@@ -15,14 +14,14 @@ const schema = yup.object({
   paymentMethod: yup.string().required('Please select a payment method')
 });
 
-const PaymentPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+const PaymentPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [showQR, setShowQR] = useState(false);
 
   const tour = tours.find(t => t.id === id);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<PaymentForm>({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -50,13 +49,13 @@ const PaymentPage: React.FC = () => {
     { id: 'uzum', name: 'Uzum Bank', icon: Wallet, color: 'bg-purple-600' }
   ];
 
-  const onSubmit = (data: PaymentForm) => {
+  const onSubmit = (data) => {
     console.log('Payment data:', { ...data, tourId: tour.id, amount: tour.price });
     setShowQR(true);
     // Here you would normally send data to backend and redirect to payment gateway
   };
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price) => {
     return new Intl.NumberFormat('uz-UZ').format(price) + ' UZS';
   };
 
@@ -224,4 +223,4 @@ const PaymentPage: React.FC = () => {
   );
 };
 
-export default PaymentPage;
+export default PaymentPage; 

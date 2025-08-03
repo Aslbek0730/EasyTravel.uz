@@ -2,16 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TourCard from './TourCard';
-import { Tour } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface TourSliderProps {
-  tours: Tour[];
-  title: string;
-  onTourClick?: (tour: Tour) => void;
-}
-
-const TourSlider: React.FC<TourSliderProps> = ({ tours, title, onTourClick }) => {
+const TourSlider = ({ tours, title, onTourClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(1);
   const { t } = useLanguage();
@@ -132,4 +125,4 @@ const TourSlider: React.FC<TourSliderProps> = ({ tours, title, onTourClick }) =>
   );
 };
 
-export default TourSlider;
+export default TourSlider; 

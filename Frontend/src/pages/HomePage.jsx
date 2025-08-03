@@ -4,15 +4,14 @@ import FeatureCards from '../components/FeatureCards';
 import TourSlider from '../components/TourSlider';
 import TourDetailsModal from '../components/TourDetailsModal';
 import { featuredTours } from '../data/tours';
-import { Tour } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const HomePage: React.FC = () => {
-  const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
+const HomePage = () => {
+  const [selectedTour, setSelectedTour] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useLanguage();
 
-  const handleTourClick = (tour: Tour) => {
+  const handleTourClick = (tour) => {
     setSelectedTour(tour);
     setIsModalOpen(true);
   };
@@ -40,4 +39,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default HomePage; 

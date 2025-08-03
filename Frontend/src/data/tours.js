@@ -1,6 +1,4 @@
-import { Tour } from '../types';
-
-export const tours: Tour[] = [
+export const tours = [
   {
     id: '1',
     name: 'Silk Road Adventure',
@@ -87,4 +85,4 @@ export const tours: Tour[] = [
   }
 ];
 
-export const featuredTours = tours.slice(0, 3);
+export const featuredTours = tours.slice(0, 3); 

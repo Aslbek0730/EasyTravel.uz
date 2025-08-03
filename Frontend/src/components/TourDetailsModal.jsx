@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Calendar, Clock, Star, ChevronLeft, ChevronRight, Users } from 'lucide-react';
-import { Tour } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 
-interface TourDetailsModalProps {
-  tour: Tour | null;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ tour, isOpen, onClose }) => {
+const TourDetailsModal = ({ tour, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { t } = useLanguage();
 
@@ -33,12 +26,12 @@ const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ tour, isOpen, onClo
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price) => {
     return new Intl.NumberFormat('uz-UZ').format(price) + ' UZS';
   };
 
-  const getLocationInfo = (destination: string) => {
-    const locationMap: { [key: string]: { country: string; region: string; coordinates: string } } = {
+  const getLocationInfo = (destination) => {
+    const locationMap = {
       'Tashkent - Bukhara - Khiva': {
         country: 'Uzbekistan',
         region: 'Central Asia',
@@ -278,4 +271,4 @@ const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ tour, isOpen, onClo
   );
 };
 
-export default TourDetailsModal;
+export default TourDetailsModal; 

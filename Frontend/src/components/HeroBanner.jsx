@@ -4,7 +4,7 @@ import { ArrowRight, Star, Users, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const HeroBanner: React.FC = () => {
+const HeroBanner = () => {
   const { t } = useLanguage();
 
   return (
@@ -116,4 +116,4 @@ const HeroBanner: React.FC = () => {
   );
 };
 
-export default HeroBanner;
+export default HeroBanner; 

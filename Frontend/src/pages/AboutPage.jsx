@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Award, Shield, Heart, Globe, Zap } from 'lucide-react';
 
-const AboutPage: React.FC = () => {
+const AboutPage = () => {
   const stats = [
     { number: '5+', label: 'Years Experience', icon: Award },
     { number: '5000+', label: 'Happy Travelers', icon: Users },
@@ -182,4 +182,4 @@ const AboutPage: React.FC = () => {
   );
 };
 
-export default AboutPage;
+export default AboutPage; 

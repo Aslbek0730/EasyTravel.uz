@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Language, LanguageContextType } from '../types';
+import React, { createContext, useContext, useState } from 'react';
 
 const translations = {
   en: {
@@ -37,7 +36,6 @@ const translations = {
     allPrices: 'All Prices',
     clearAll: 'Clear All',
     showing: 'Showing',
-    tours: 'tours',
     tour: 'tour',
     noToursFound: 'No tours found',
     adjustFilters: 'Try adjusting your filters to see more results',
@@ -101,7 +99,6 @@ const translations = {
     allPrices: 'Все цены',
     clearAll: 'Очистить все',
     showing: 'Показано',
-    tours: 'туров',
     tour: 'тур',
     noToursFound: 'Туры не найдены',
     adjustFilters: 'Попробуйте изменить фильтры для получения большего количества результатов',
@@ -132,7 +129,7 @@ const translations = {
   }
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext();
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
@@ -142,15 +139,11 @@ export const useLanguage = () => {
   return context;
 };
 
-interface LanguageProviderProps {
-  children: ReactNode;
-}
+export const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState('en');
 
-export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
-
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations['en']] || key;
+  const t = (key) => {
+    return translations[language][key] || key;
   };
 
   return (
@@ -158,4 +151,4 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       {children}
     </LanguageContext.Provider>
   );
-};
+}; 

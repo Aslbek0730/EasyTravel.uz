@@ -4,7 +4,7 @@ import { Menu, X, MapPin, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const location = useLocation();
@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
     { name: t('contact'), path: '/contact' },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
                         <button
                           key={lang.code}
                           onClick={() => {
-                            setLanguage(lang.code as 'en' | 'ru');
+                            setLanguage(lang.code);
                             setIsLangOpen(false);
                           }}
                           className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 transition-colors flex items-center space-x-2 ${
@@ -143,7 +143,7 @@ const Navbar: React.FC = () => {
                       <button
                         key={lang.code}
                         onClick={() => {
-                          setLanguage(lang.code as 'en' | 'ru');
+                          setLanguage(lang.code);
                           setIsOpen(false);
                         }}
                         className={`w-full text-left px-3 py-2 rounded-md text-sm transition-all duration-200 flex items-center space-x-2 ${
@@ -167,4 +167,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default Navbar; 

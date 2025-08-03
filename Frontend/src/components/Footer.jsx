@@ -2,7 +2,7 @@ import React from 'react';
 import { MapPin, Phone, Mail, Facebook, Instagram, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -100,4 +100,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default Footer; 

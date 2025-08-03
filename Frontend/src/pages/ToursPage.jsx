@@ -4,14 +4,13 @@ import TourCard from '../components/TourCard';
 import FilterPanel from '../components/FilterPanel';
 import TourDetailsModal from '../components/TourDetailsModal';
 import { tours } from '../data/tours';
-import { Tour } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const ToursPage: React.FC = () => {
+const ToursPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
-  const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
+  const [priceRange, setPriceRange] = useState([0, 5000000]);
+  const [selectedTour, setSelectedTour] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useLanguage();
 
@@ -26,7 +25,7 @@ const ToursPage: React.FC = () => {
     });
   }, [searchTerm, selectedCategory, priceRange]);
 
-  const handleTourClick = (tour: Tour) => {
+  const handleTourClick = (tour) => {
     setSelectedTour(tour);
     setIsModalOpen(true);
   };
@@ -106,4 +105,4 @@ const ToursPage: React.FC = () => {
   );
 };
 
-export default ToursPage;
+export default ToursPage; 

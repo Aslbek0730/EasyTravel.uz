@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram } from 'lucide-react';
-import { ContactForm } from '../types';
 
 const schema = yup.object({
   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
@@ -13,12 +12,12 @@ const schema = yup.object({
   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters')
 });
 
-const ContactPage: React.FC = () => {
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactForm>({
+const ContactPage = () => {
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data: ContactForm) => {
+  const onSubmit = async (data) => {
     console.log('Contact form data:', data);
     // Here you would send data to backend
     await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
@@ -238,4 +237,4 @@ const ContactPage: React.FC = () => {
   );
 };
 
-export default ContactPage;
+export default ContactPage; 

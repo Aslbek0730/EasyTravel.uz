@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Shield, Clock, Users, Star, Headphones, CreditCard } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const FeatureCards: React.FC = () => {
+const FeatureCards = () => {
   const { t } = useLanguage();
 
   const features = [
@@ -73,4 +73,4 @@ const FeatureCards: React.FC = () => {
   );
 };
 
-export default FeatureCards;
+export default FeatureCards; 

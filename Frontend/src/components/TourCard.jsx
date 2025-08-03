@@ -1,19 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Star, ArrowRight, MapPin } from 'lucide-react';
-import { Tour } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface TourCardProps {
-  tour: Tour;
-  index?: number;
-  onCardClick?: (tour: Tour) => void;
-}
-
-const TourCard: React.FC<TourCardProps> = ({ tour, index = 0, onCardClick }) => {
+const TourCard = ({ tour, index = 0, onCardClick }) => {
   const { t } = useLanguage();
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price) => {
     return new Intl.NumberFormat('uz-UZ').format(price) + ' UZS';
   };
 
@@ -92,4 +85,4 @@ const TourCard: React.FC<TourCardProps> = ({ tour, index = 0, onCardClick }) => 
   );
 };
 
-export default TourCard;
+export default TourCard; 

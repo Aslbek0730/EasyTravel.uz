@@ -3,16 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, Filter, Calendar, MapPin, DollarSign } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface FilterPanelProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-  priceRange: [number, number];
-  setPriceRange: (range: [number, number]) => void;
-}
-
-const FilterPanel: React.FC<FilterPanelProps> = ({
+const FilterPanel = ({
   searchTerm,
   setSearchTerm,
   selectedCategory,
@@ -106,4 +97,4 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   );
 };
 
-export default FilterPanel;
+export default FilterPanel; 
