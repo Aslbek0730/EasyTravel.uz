@@ -1,137 +1,153 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { contactAPI } from '../services/api';
 
 const schema = yup.object({
-  name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
-  email: yup.string().required('Email is required').email('Invalid email format'),
-  phone: yup.string().required('Phone number is required'),
-  message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters')
+  name: yup.string().required('Ism kiritish majburiy').min(2, 'Ism kamida 2 ta harf bo\'lishi kerak'),
+  email: yup.string().required('Email kiritish majburiy').email('Noto\'g\'ri email format'),
+  phone: yup.string().required('Telefon raqam kiritish majburiy').matches(/^\+998\d{9}$/, 'Telefon raqam +998XXXXXXXXX formatida bo\'lishi kerak'),
+  message: yup.string().required('Xabar kiritish majburiy').min(10, 'Xabar kamida 10 ta harf bo\'lishi kerak'),
 });
 
 const ContactPage = () => {
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({
-    resolver: yupResolver(schema)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
-    console.log('Contact form data:', data);
-    // Here you would send data to backend
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-    alert('Message sent successfully!');
-    reset();
+    try {
+      setIsSubmitting(true);
+      setError(null);
+      
+      await contactAPI.sendMessage(data);
+      
+      setSubmitSuccess(true);
+      reset();
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 3000);
+      
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Xabar yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
     {
-      icon: Phone,
-      title: 'Phone',
-      details: ['+998 71 123 45 67', '+998 90 123 45 67'],
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100'
-    },
-    {
       icon: Mail,
       title: 'Email',
-      details: ['info@tourismtravel.uz', 'support@tourismtravel.uz'],
-      color: 'text-green-600',
-      bgColor: 'bg-green-100'
+      value: 'info@wondertravel.uz',
+      description: 'Biz bilan bog\'lanish uchun'
+    },
+    {
+      icon: Phone,
+      title: 'Telefon',
+      value: '+998 90 123 45 67',
+      description: '24/7 qo\'llab-quvvatlash'
     },
     {
       icon: MapPin,
-      title: 'Address',
-      details: ['Amir Temur Street 123', 'Tashkent, Uzbekistan'],
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
-    },
-    {
-      icon: Clock,
-      title: 'Working Hours',
-      details: ['Mon - Fri: 9:00 - 18:00', 'Sat - Sun: 10:00 - 16:00'],
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      title: 'Manzil',
+      value: 'Toshkent, O\'zbekiston',
+      description: 'Ofisimiz joylashgan joy'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Get In <span className="text-blue-600">Touch</span>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Biz bilan bog'laning
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Have questions about our tours? Need help planning your perfect trip? We're here to help!
+            Savollaringiz bormi? Biz sizga yordam berishdan xursand bo'lamiz
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-1"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-8"
           >
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-8">Contact Information</h2>
-              
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Aloqa ma'lumotlari
+              </h2>
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <motion.div
                     key={info.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                     className="flex items-start space-x-4"
                   >
-                    <div className={`p-3 ${info.bgColor} rounded-lg`}>
-                      <info.icon className={`h-6 w-6 ${info.color}`} />
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <info.icon className="h-6 w-6 text-blue-600" />
+                      </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-2">{info.title}</h3>
-                      {info.details.map((detail, i) => (
-                        <p key={i} className="text-gray-600 text-sm">{detail}</p>
-                      ))}
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                        {info.title}
+                      </h3>
+                      <p className="text-blue-600 font-medium mb-1">
+                        {info.value}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        {info.description}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
               </div>
+            </div>
 
-              {/* Social Media */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <h3 className="font-semibold text-gray-800 mb-4">Follow Us</h3>
-                <div className="flex space-x-4">
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href="#"
-                    className="bg-blue-600 p-3 rounded-full text-white hover:bg-blue-700 transition-colors"
-                  >
-                    <Facebook className="h-5 w-5" />
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href="#"
-                    className="bg-pink-600 p-3 rounded-full text-white hover:bg-pink-700 transition-colors"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href="#"
-                    className="bg-sky-500 p-3 rounded-full text-white hover:bg-sky-600 transition-colors"
-                  >
-                    <Send className="h-5 w-5" />
-                  </motion.a>
+            {/* Additional Info */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Ish vaqti
+              </h3>
+              <div className="space-y-2 text-gray-600">
+                <div className="flex justify-between">
+                  <span>Dushanba - Juma:</span>
+                  <span>09:00 - 18:00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Shanba:</span>
+                  <span>10:00 - 16:00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Yakshanba:</span>
+                  <span>Dam olish kuni</span>
                 </div>
               </div>
             </div>
@@ -139,99 +155,123 @@ const ContactPage = () => {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="bg-white rounded-2xl shadow-lg p-8"
           >
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-8">Send us a Message</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Xabar yuborish
+            </h2>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                    <input
-                      {...register('name')}
-                      type="text"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your full name"
-                    />
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                    <input
-                      {...register('phone')}
-                      type="tel"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="+998 90 123 45 67"
-                    />
-                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-                  </div>
+            {submitSuccess && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+              >
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                  <span className="text-green-800 font-medium">
+                    Xabar muvaffaqiyatli yuborildi!
+                  </span>
                 </div>
+              </motion.div>
+            )}
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input
-                    {...register('email')}
-                    type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your email"
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-                </div>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+              >
+                <span className="text-red-800">{error}</span>
+              </motion.div>
+            )}
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea
-                    {...register('message')}
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                    placeholder="Tell us about your travel plans or any questions you have..."
-                  />
-                  {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
-                </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  To'liq ism
+                </label>
+                <input
+                  type="text"
+                  {...register('name')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Ismingizni kiriting"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                )}
+              </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-lg disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="h-5 w-5" />
-                    </>
-                  )}
-                </motion.button>
-              </form>
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  {...register('email')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Email manzilingizni kiriting"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Telefon raqam
+                </label>
+                <input
+                  type="tel"
+                  {...register('phone')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="+998XXXXXXXXX"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Xabar
+                </label>
+                <textarea
+                  {...register('message')}
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                  placeholder="Xabaringizni yozing..."
+                />
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
+                )}
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Yuborilmoqda...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5 mr-2" />
+                    Xabar yuborish
+                  </>
+                )}
+              </motion.button>
+            </form>
           </motion.div>
         </div>
-
-        {/* Map Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mt-16"
-        >
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="h-96 bg-gray-200 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 font-medium">Interactive Map</p>
-                <p className="text-gray-400 text-sm">Amir Temur Street 123, Tashkent</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </div>
   );

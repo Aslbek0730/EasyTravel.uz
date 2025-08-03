@@ -145,6 +145,141 @@ Frontend/
 - **React Hook Form** - form handling
 - **Yup** - validation
 
+## 🛠️ Backend qismda qilingan ishlar
+
+### 📁 Loyiha tuzilishi
+```
+Backend/
+├── wondertravel/          # Django loyiha
+│   ├── settings.py        # Sozlamalar
+│   ├── urls.py           # Asosiy URL patterns
+│   └── wsgi.py           # WSGI konfiguratsiya
+├── tours/                 # Asosiy app
+│   ├── models.py         # Database modellar
+│   ├── views.py          # API views
+│   ├── serializers.py    # DRF serializers
+│   ├── urls.py           # App URL patterns
+│   └── admin.py          # Admin panel
+├── media/                 # Upload fayllar
+├── staticfiles/           # Static fayllar
+└── requirements.txt       # Dependencies
+```
+
+### 🗄️ Database modellar
+
+#### 🎯 TourPackage (Sayohat paketlari)
+- **title** - Paket nomi
+- **description** - Batafsil tavsif
+- **image** - Rasm fayli
+- **location** - Manzil
+- **start_date/end_date** - Sana oralig'i
+- **price** - Narxi (UZS)
+- **duration** - Davomiyligi (kunlar)
+- **is_active** - Faol/faol emas
+
+#### 💳 Booking (Buyurtmalar)
+- **tour** - Sayohat paketi (ForeignKey)
+- **name** - Foydalanuvchi ismi
+- **phone** - Telefon raqam
+- **email** - Email manzil
+- **payment_method** - To'lov usuli (payme/click/uzum)
+- **is_paid** - To'langan/To'lanmagan
+
+#### 📞 ContactMessage (Kontakt xabarlar)
+- **name** - Foydalanuvchi ismi
+- **email** - Email manzil
+- **phone** - Telefon raqam
+- **message** - Xabar matni
+- **sent_at** - Yuborilgan vaqt
+- **is_read** - O'qilgan/yo'q
+
+### 🔗 API Endpoints
+
+#### 📋 Sayohat paketlari
+```
+GET /api/tours/                    # Barcha paketlar
+GET /api/tours/<id>/               # Bitta paket
+GET /api/tours/featured/           # Trend paketlar
+GET /api/tours/search/?q=paris     # Qidirish
+```
+
+#### 💳 Buyurtmalar
+```
+POST /api/bookings/                # Yangi buyurtma
+GET /api/bookings/                 # Barcha buyurtmalar
+POST /api/bookings/<id>/verify-payment/  # To'lov tasdiqlash
+```
+
+#### 📞 Kontakt
+```
+POST /api/contact/                 # Yangi xabar
+GET /api/contact/                  # Barcha xabarlar
+POST /api/contact/<id>/mark-read/  # O'qilgan deb belgilash
+```
+
+### 🔧 Texnik xususiyatlar
+
+#### ⚙️ Django REST Framework
+- **ViewSets** - CRUD operatsiyalar
+- **Serializers** - Data validation
+- **Permissions** - Ruxsatlar
+- **Filtering** - Qidirish va filtrlash
+- **Pagination** - Sahifalarga bo'lish
+
+#### 🔐 Xavfsizlik
+- **JWT Authentication** - Token-based auth
+- **CORS Headers** - Cross-origin requests
+- **Input Validation** - Data sanitization
+- **CSRF Protection** - Cross-site request forgery
+
+#### 📊 Database
+- **SQLite** - Development uchun
+- **PostgreSQL** - Production uchun
+- **Migrations** - Database changes
+- **Admin Panel** - Content management
+
+#### 🎯 API Features
+- **Swagger Documentation** - Auto-generated docs
+- **Filtering** - Price, location, duration
+- **Search** - Full-text search
+- **Ordering** - Sort by price, date
+- **Pagination** - Page-based results
+
+### 🛠️ Development tools
+
+#### 📦 Dependencies
+- **Django 5.2.4** - Web framework
+- **DRF 3.16.0** - REST API
+- **django-cors-headers** - CORS support
+- **djangorestframework-simplejwt** - JWT auth
+- **drf-yasg** - API documentation
+- **django-filter** - Advanced filtering
+- **Pillow** - Image processing
+- **psycopg2-binary** - PostgreSQL adapter
+
+#### 🔧 Management Commands
+- **create_sample_data** - Test ma'lumotlari yaratish
+- **makemigrations** - Database changes
+- **migrate** - Database updates
+- **createsuperuser** - Admin user
+
+### 🚀 Deployment
+
+#### 📋 Requirements
+- **Python 3.8+** - Runtime environment
+- **PostgreSQL** - Production database
+- **Redis** - Caching (optional)
+- **Nginx** - Web server
+- **Gunicorn** - WSGI server
+
+#### 🔧 Environment Variables
+```bash
+SECRET_KEY=your-secret-key
+DEBUG=False
+DATABASE_URL=postgresql://user:pass@host:port/db
+ALLOWED_HOSTS=your-domain.com
+```
+
 ### 🎉 Natijalar
 
 #### ✅ Muvaffaqiyatli amalga oshirilgan
@@ -155,14 +290,20 @@ Frontend/
 - **Performance optimized** - tez va samarali
 - **SEO friendly** - search engines uchun
 - **Accessible** - barcha foydalanuvchilar uchun
+- **RESTful API** - complete backend implementation
+- **Admin Panel** - content management system
+- **Database Models** - structured data storage
+- **API Documentation** - Swagger/OpenAPI docs
 
 #### 🚀 Keyingi qadamlar
-- **Backend integration** - API endpoints
-- **Database** - tour va user data
-- **Authentication** - user login/register
-- **Admin panel** - content management
+- **Frontend-Backend Integration** - API connection
+- **Real Payment Integration** - Payme/Click/Uzum APIs
+- **Email Notifications** - automated emails
+- **File Upload** - image handling
+- **User Authentication** - login/register system
 - **Analytics** - user behavior tracking
 - **Testing** - unit va integration tests
+- **Deployment** - production setup
 
 ---
 

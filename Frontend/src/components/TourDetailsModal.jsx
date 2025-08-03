@@ -27,51 +27,60 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
   };
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('uz-UZ').format(price) + ' UZS';
+    return new Intl.NumberFormat('uz-UZ', {
+      style: 'currency',
+      currency: 'UZS',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price);
   };
 
-  const getLocationInfo = (destination) => {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('uz-UZ', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const getLocationInfo = (location) => {
     const locationMap = {
-      'Tashkent - Bukhara - Khiva': {
-        country: 'Uzbekistan',
-        region: 'Central Asia',
-        coordinates: '41.2995° N, 69.2401° E'
+      'Parij, Fransiya': {
+        country: 'Fransiya',
+        region: 'Ile-de-France',
+        coordinates: '48.8566° N, 2.3522° E'
       },
-      'Chimgan Mountains': {
-        country: 'Uzbekistan',
-        region: 'Tashkent Region',
-        coordinates: '41.5833° N, 70.0167° E'
+      'Tokio, Yaponiya': {
+        country: 'Yaponiya',
+        region: 'Kanto',
+        coordinates: '35.6762° N, 139.6503° E'
       },
-      'Kyzylkum Desert': {
-        country: 'Uzbekistan',
-        region: 'Central Uzbekistan',
-        coordinates: '42.0000° N, 63.0000° E'
+      'Dubai, Birlashgan Arab Amirliklari': {
+        country: 'Birlashgan Arab Amirliklari',
+        region: 'Dubai',
+        coordinates: '25.2048° N, 55.2708° E'
       },
-      'Samarkand - Shakhrisabz': {
-        country: 'Uzbekistan',
-        region: 'Samarkand Region',
-        coordinates: '39.6270° N, 66.9750° E'
+      'Istanbul, Turkiya': {
+        country: 'Turkiya',
+        region: 'Marmara',
+        coordinates: '41.0082° N, 28.9784° E'
       },
-      'Aydarkul Lake': {
-        country: 'Uzbekistan',
-        region: 'Navoi Region',
-        coordinates: '40.5000° N, 65.5000° E'
-      },
-      'Tashkent City Tour': {
-        country: 'Uzbekistan',
-        region: 'Tashkent Region',
-        coordinates: '41.2995° N, 69.2401° E'
+      'Bali, Indoneziya': {
+        country: 'Indoneziya',
+        region: 'Bali',
+        coordinates: '8.3405° S, 115.0920° E'
       }
     };
 
-    return locationMap[destination] || {
-      country: 'Uzbekistan',
-      region: 'Central Asia',
+    return locationMap[location] || {
+      country: 'O\'zbekiston',
+      region: 'Markaziy Osiyo',
       coordinates: '41.2995° N, 69.2401° E'
     };
   };
 
-  const locationInfo = getLocationInfo(tour.destination);
+  const locationInfo = getLocationInfo(tour.location);
 
   return (
     <AnimatePresence>
@@ -107,7 +116,7 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                   src={images[currentImageIndex]}
-                  alt={tour.name}
+                  alt={tour.title}
                   className="w-full h-full object-cover"
                 />
                 
@@ -138,16 +147,16 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
                   ))}
                 </div>
 
-                {/* Category Badge */}
+                {/* Duration Badge */}
                 <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  {t(tour.category.toLowerCase())}
+                  {tour.duration} kun
                 </div>
 
                 {/* Rating Badge */}
                 <div className="absolute top-4 left-20 bg-white bg-opacity-90 px-3 py-1 rounded-full">
                   <div className="flex items-center space-x-1">
                     <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                    <span className="text-sm font-semibold">{tour.rating}</span>
+                    <span className="text-sm font-semibold">4.8</span>
                   </div>
                 </div>
               </div>
@@ -158,7 +167,7 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Info */}
                 <div className="lg:col-span-2">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">{tour.name}</h2>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">{tour.title}</h2>
                   <p className="text-gray-600 mb-6 leading-relaxed">{tour.description}</p>
 
                   {/* Tour Details */}
@@ -166,60 +175,70 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
                     <div className="flex items-center space-x-3">
                       <MapPin className="h-5 w-5 text-blue-500" />
                       <div>
-                        <span className="text-sm text-gray-500">{t('destination')}</span>
-                        <p className="font-medium">{tour.destination}</p>
+                        <span className="text-sm text-gray-500">Manzil</span>
+                        <p className="font-medium">{tour.location}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Clock className="h-5 w-5 text-blue-500" />
                       <div>
-                        <span className="text-sm text-gray-500">{t('duration')}</span>
-                        <p className="font-medium">{tour.duration}</p>
+                        <span className="text-sm text-gray-500">Davomiyligi</span>
+                        <p className="font-medium">{tour.duration} kun</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Calendar className="h-5 w-5 text-blue-500" />
                       <div>
-                        <span className="text-sm text-gray-500">{t('startDate')}</span>
-                        <p className="font-medium">{new Date(tour.startDate).toLocaleDateString()}</p>
+                        <span className="text-sm text-gray-500">Boshlanish sanasi</span>
+                        <p className="font-medium">{formatDate(tour.start_date)}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Users className="h-5 w-5 text-blue-500" />
                       <div>
-                        <span className="text-sm text-gray-500">{t('category')}</span>
-                        <p className="font-medium">{t(tour.category.toLowerCase())}</p>
+                        <span className="text-sm text-gray-500">Tugash sanasi</span>
+                        <p className="font-medium">{formatDate(tour.end_date)}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* What's Included */}
                   <div className="mb-6">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-3">{t('included')}</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3">Dasturga kiritilgan</h3>
                     <div className="grid grid-cols-2 gap-2">
-                      {tour.included.map((item, index) => (
-                        <div key={index} className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-gray-600">{item}</span>
-                        </div>
-                      ))}
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Uchish va tushish</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Mehmonxona</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Transport xizmati</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Professional yo'riqchi</span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Location Information */}
                   <div className="bg-gray-50 rounded-lg p-6">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('location')}</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Manzil ma'lumotlari</h3>
                     <div className="space-y-3">
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Country:</span>
+                        <span className="text-gray-600">Mamlakat:</span>
                         <span className="font-medium">{locationInfo.country}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Region:</span>
+                        <span className="text-gray-600">Hudud:</span>
                         <span className="font-medium">{locationInfo.region}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Coordinates:</span>
+                        <span className="text-gray-600">Koordinatalar:</span>
                         <span className="font-medium font-mono text-sm">{locationInfo.coordinates}</span>
                       </div>
                     </div>
@@ -233,31 +252,31 @@ const TourDetailsModal = ({ tour, isOpen, onClose }) => {
                       <div className="text-3xl font-bold text-blue-600 mb-2">
                         {formatPrice(tour.price)}
                       </div>
-                      <div className="text-gray-600">{t('perPerson')}</div>
+                      <div className="text-gray-600">kishi boshiga</div>
                     </div>
 
-                    <Link to={`/tours/${tour.id}`}>
+                    <Link to={`/payment/${tour.id}`}>
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg"
                       >
-                        {t('bookNow')}
+                        Hozir bron qilish
                       </motion.button>
                     </Link>
 
                     <div className="mt-6 space-y-3 text-sm text-gray-600">
                       <div className="flex items-center justify-between">
-                        <span>Start Date:</span>
-                        <span>{new Date(tour.startDate).toLocaleDateString()}</span>
+                        <span>Boshlanish sanasi:</span>
+                        <span>{formatDate(tour.start_date)}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span>End Date:</span>
-                        <span>{new Date(tour.endDate).toLocaleDateString()}</span>
+                        <span>Tugash sanasi:</span>
+                        <span>{formatDate(tour.end_date)}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span>Duration:</span>
-                        <span>{tour.duration}</span>
+                        <span>Davomiyligi:</span>
+                        <span>{tour.duration} kun</span>
                       </div>
                     </div>
                   </div>
